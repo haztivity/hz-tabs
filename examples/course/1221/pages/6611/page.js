@@ -1,20 +1,31 @@
-System.register(["@haztivity/core/index", "./page.html!text"], function (exports_1, context_1) {
+System.register(["jquery-ui/themes/base/core.css!", "jquery-ui/themes/base/tabs.css!", "jquery-ui/themes/base/theme.css!", "@haztivity/core/index", "./page.html!text", "../../../../../src/HzTabs"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var index_1, page_html_text_1, page;
+    var index_1, page_html_text_1, HzTabs_1, page;
     return {
         setters: [
+            function (_1) {
+            },
+            function (_2) {
+            },
+            function (_3) {
+            },
             function (index_1_1) {
                 index_1 = index_1_1;
             },
             function (page_html_text_1_1) {
                 page_html_text_1 = page_html_text_1_1;
+            },
+            function (HzTabs_1_1) {
+                HzTabs_1 = HzTabs_1_1;
             }
         ],
         execute: function () {
             exports_1("page", page = index_1.PageFactory.createPage({
                 name: "6611",
-                resources: [],
+                resources: [
+                    HzTabs_1.HzTabsResource
+                ],
                 template: page_html_text_1.default
             }));
             page.on(index_1.PageController.ON_RENDERING, null, function (eventObject, template, pageController) {

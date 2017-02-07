@@ -2,12 +2,17 @@
  * @license
  * Copyright Davinchi. All Rights Reserved.
  */
+import "jquery-ui/themes/base/core.css!";
+import "jquery-ui/themes/base/tabs.css!";
+import "jquery-ui/themes/base/theme.css!";
 import {PageFactory, PageRegister, PageController} from "@haztivity/core/index";
 import template from "./page.html!text";
+import {HzTabsResource} from "../../../../../src/HzTabs";
 export let page: PageRegister = PageFactory.createPage(
     {
         name: "6611",
         resources: [
+            HzTabsResource
         ],
         template: template
     }
