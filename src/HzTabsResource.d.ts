@@ -33,6 +33,8 @@ export declare class HzTabsResource extends ResourceController {
      */
     protected _createState(): void;
     getInstance(): any;
+    disable(): void;
+    enable(): void;
     /**
      * Re inicializa el componente
      */

@@ -95,7 +95,16 @@ export class HzTabsResource extends ResourceController {
     public getInstance(): any {
         return this._tabsInstance;
     }
-
+    public disable(){
+        if(super.disable()){
+            this._tabsInstance.disable();
+        }
+    }
+    public enable(){
+        if(super.enable()){
+            this._tabsInstance.enable();
+        }
+    }
     /**
      * Re inicializa el componente
      */
