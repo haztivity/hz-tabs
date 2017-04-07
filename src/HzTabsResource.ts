@@ -3,8 +3,7 @@
  * Copyright Davinchi. All Rights Reserved.
  */
 import {Resource, ResourceController, EventEmitterFactory, $, DataOptions} from "@haztivity/core/index";
-import * as tabs from "jquery-ui/ui/widgets/tabs";
-tabs;
+import "jquery-ui/ui/widgets/tabs";
 @Resource(
     {
         name: "HzTabs",
