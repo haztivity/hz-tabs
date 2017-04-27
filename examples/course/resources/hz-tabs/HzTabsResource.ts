@@ -2,8 +2,8 @@
  * @license
  * Copyright Davinchi. All Rights Reserved.
  */
-import {Resource, ResourceController, EventEmitterFactory, $, DataOptions} from "@haztivity/core";
-import "jquery-ui-dist/jquery-ui.js";
+import {Resource, ResourceController, EventEmitterFactory, $, DataOptions} from "@haztivity/core/index";
+import "jquery-ui-dist/jquery-ui";
 @Resource(
     {
         name: "HzTabs",

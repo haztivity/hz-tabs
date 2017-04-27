@@ -14,8 +14,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
  * @license
  * Copyright Davinchi. All Rights Reserved.
  */
-var index_1 = require("@haztivity/core/index");
-require("jquery-ui/ui/widgets/tabs");
+var core_1 = require("@haztivity/core");
+require("jquery-ui-dist/jquery-ui.js");
 var HzTabsResource = HzTabsResource_1 = (function (_super) {
     __extends(HzTabsResource, _super);
     function HzTabsResource(_$, _EventEmitterFactory, _DataOptions) {
@@ -67,7 +67,7 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
         //if any tab is active by default, set visited to 0
         var $panels = this.getInstance().panels;
         for (var tabIndex = 0, $panelsLength = $panels.length; tabIndex < $panelsLength; tabIndex++) {
-            var $currentPanel = index_1.$($panels[tabIndex]), id = $currentPanel.attr("id");
+            var $currentPanel = core_1.$($panels[tabIndex]), id = $currentPanel.attr("id");
             this._tabsState.push({
                 visited: false
             });
@@ -106,15 +106,15 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
         this._assignEvents();
     };
     return HzTabsResource;
-}(index_1.ResourceController));
+}(core_1.ResourceController));
 HzTabsResource._DEFAULT_TABS_OPTIONS = {};
 HzTabsResource = HzTabsResource_1 = __decorate([
-    index_1.Resource({
+    core_1.Resource({
         name: "HzTabs",
         dependencies: [
-            index_1.$,
-            index_1.EventEmitterFactory,
-            index_1.DataOptions
+            core_1.$,
+            core_1.EventEmitterFactory,
+            core_1.DataOptions
         ]
     })
 ], HzTabsResource);

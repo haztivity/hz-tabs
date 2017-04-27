@@ -1,0 +1,57 @@
+div
+    div.markdown-wrapper
+        :markdown-it(linkify)
+            ### Events
+            The events are assigned through jquery like usuals
+            #### page.ts
+            ```typescript
+            page.on(
+                PageController.ON_RENDERED, null, (eventObject, $page: JQuery, pageController: PageController) => {
+                    //Find in the page the element that has tabs
+                    $page.find('#tabs-events').on('tabsactivate', (event, ui)=>{
+                        alert(`Tab changed, previous: ${ui.oldPanel.attr("id")}, new tab: ${ui.newPanel.attr("id")}`);
+                        console.log(`Tab changed, previous: ${ui.oldPanel.attr("id")}, new tab: ${ui.newPanel.attr("id")}`);
+                    });
+                }
+            );
+            ```
+        div#tabs-events(data-hz-resource="HzTabs")
+            ul
+                li
+                    a(href='#tabs-1') Tab 1
+                li
+                    a(href='#tabs-2') Tab 2
+            div#tabs-1
+                p Tab 1 content
+            div#tabs-2
+                p Tab 2 content
+        :markdown-it(linkify)
+            ### Methods
+            The same with the methods
+            #### page.ts
+            ```typescript
+            page.on(
+                PageController.ON_RENDERED, null, (eventObject, $page: JQuery, pageController: PageController) => {
+                    //Find in the page the element that has slick
+                    let $tabsMethod = $page.find('#tabs-method');
+                    $page.find('#toggleDisabled').on('click', (event)=>{
+                        if($tabsMethod.tabs("option","disabled")){
+                            $tabsMethod.tabs("enable");
+                        }else{
+                            $tabsMethod.tabs("disable");
+                        }
+                    });
+                }
+            );
+            ```
+        button#toggleDisabled Toggle disabled
+        div#tabs-method(data-hz-resource="HzTabs")
+            ul
+                li
+                    a(href='#method-tabs-1') Tab 1
+                li
+                    a(href='#method-tabs-2') Tab 2
+            div#method-tabs-1
+                p Tab 1 content
+            div#method-tabs-2
+                p Tab 2 content
