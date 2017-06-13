@@ -58,7 +58,7 @@ or
 </div>
 ```
 ## Sequence
-By default, the tabs requires to be activate sequentially, to activate the 3rd tabs the 2nd must have been activated before.\
+By default, the tabs require being activated sequentially, to activate the 3rd tabs the 2nd must have been activated before.\
 It's possible to disable this behavior using the attribute `data-opt-hz-tabs-sequential="false"`
 ### Options
 All the options of jquery ui accordion **except** functions could be specified by attributes using:
