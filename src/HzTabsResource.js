@@ -1,15 +1,21 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * @license
  * Copyright Davinchi. All Rights Reserved.
@@ -20,6 +26,7 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
     __extends(HzTabsResource, _super);
     function HzTabsResource(_$, _EventEmitterFactory, _DataOptions) {
         var _this = _super.call(this, _$, _EventEmitterFactory) || this;
+        _this._activated = [];
         _this._DataOptions = _DataOptions;
         return _this;
     }
@@ -45,7 +52,39 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
         }
     };
     HzTabsResource.prototype._assignEvents = function () {
-        this._$element.off(HzTabsResource_1.NAMESPACE).on("tabsactivate." + HzTabsResource_1.NAMESPACE, { instance: this }, this._onActivateTab);
+        this._$element.off("." + HzTabsResource_1.NAMESPACE);
+        this._$element.on("tabsactivate." + HzTabsResource_1.NAMESPACE, { instance: this }, this._onActivateTab);
+        this._$element.on("tabsbeforeactivate." + HzTabsResource_1.NAMESPACE, { instance: this }, this._onBeforeActivateTab);
+    };
+    /**
+     * Invocado antes de activarse una pestaña. Comprueba la secuencia y premite o cancela la activación
+     * @param e
+     * @param ui
+     * @private
+     */
+    HzTabsResource.prototype._onBeforeActivateTab = function (e, ui) {
+        var instance = e.data.instance;
+        if (instance._options.sequential != false) {
+            var newTab = ui.newTab;
+            if (newTab && newTab.length > 0) {
+                var prevent = true, index = instance._tabsInstance.tabs.index(newTab);
+                //if the header is not the first
+                if (index != 0) {
+                    //get the previous header
+                    var sibling = instance._tabsInstance.tabs.get(index - 1), siblingId = instance._$(sibling).attr("aria-labelledby");
+                    //check if has been activated
+                    if (instance._activated.indexOf(siblingId) != -1) {
+                        prevent = false;
+                    }
+                }
+                else {
+                    prevent = false;
+                }
+                if (prevent) {
+                    e.preventDefault();
+                }
+            }
+        }
     };
     /**
      * Invocado al activarse una pestaña, se actualiza el estado de la misma
@@ -54,8 +93,7 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
      * @private
      */
     HzTabsResource.prototype._onActivateTab = function (e, ui) {
-        var instance = e.data.instance, activatedTabId = ui.newPanel.attr("id"), tabIndex = instance._tabsStateMap[activatedTabId];
-        instance._updateTabsState(tabIndex);
+        e.data.instance._storeActive();
     };
     /**
      * Crea los estados de las pestañas para el control de visualización
@@ -76,6 +114,21 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
         this._visitedCount = 0;
         if (this._options.tabs.active !== false) {
             this._updateTabsState(this._options.tabs.active || 0);
+        }
+    };
+    HzTabsResource.prototype._storeActive = function () {
+        if (this._tabsInstance) {
+            if (this._tabsInstance.active.length > 0) {
+                var id = this._tabsInstance.active.attr("aria-labelledby");
+                if (this._activated.indexOf(id) == -1) {
+                    this._activated.push(id);
+                    this._tabsInstance.active.removeClass(HzTabsResource_1.CLASS_UNCOMPLETED).addClass(HzTabsResource_1.CLASS_COMPLETED);
+                    this._tabsInstance.panels.eq(this._tabsInstance.tabs.index(this._tabsInstance.active)).removeClass(HzTabsResource_1.CLASS_UNCOMPLETED).addClass(HzTabsResource_1.CLASS_COMPLETED);
+                }
+            }
+            if (this.isCompleted() != true && this._activated.length == this._tabsInstance.tabs.length) {
+                this._markAsCompleted();
+            }
         }
     };
     HzTabsResource.prototype.getInstance = function () {
@@ -99,10 +152,12 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
             this._tabsState.destroy();
         }
         var tabsOptions = this._DataOptions.getDataOptions(this._$element, "tabs");
-        this._options.tabs = this._$.extend(true, HzTabsResource_1._DEFAULT_TABS_OPTIONS, tabsOptions);
+        this._options.tabs = this._$.extend(true, {}, HzTabsResource_1._DEFAULT_TABS_OPTIONS, tabsOptions);
         this._$element.tabs(this._options.tabs);
         this._tabsInstance = this._$element.data("uiTabs");
-        this._createState();
+        this._tabsInstance.tabs.addClass(HzTabsResource_1.CLASS_UNCOMPLETED);
+        this._tabsInstance.panels.addClass(HzTabsResource_1.CLASS_UNCOMPLETED);
+        this._storeActive();
         this._assignEvents();
     };
     return HzTabsResource;

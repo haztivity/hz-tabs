@@ -1,15 +1,36 @@
 div
     div.markdown-wrapper
         :markdown-it(linkify)
-            ## hz-tabs
-            hz-tabs is an haztivity resource wrapper for [jquery ui tabs](https://jqueryui.com/tabs/)
-            ### Usage
+            # hz-tabs
+            hz-tabs allows to create tabs as resources with all the advatages of an haztivity resource.\
+            hz-tabs uses [jquery ui tabs](https://jqueryui.com/tabs/) under the hood.
+            ## Install
+            ### NPM
+            ```npm i --save @haztivity/hz-tabs```
+            ## Dependencies
+            - JQuery
+            - JQuery UI tabs
+            - @haztivity/core
+            ## Usage
             1. Import @haztivity/hz-tabs
-            2. Add the HzTabsResource to the page
-            3. Set data-hz-resource to the tabs wrapper
-            4. Add the tabs as you like.
-            ### Simple use
-            #### template
+            2. Add HzTabsResource to the page
+            3. Create the tabs and set ```data-hz-resource="HzTabs"```
+            ### Ts
+            ```typescript
+            import {PageFactory, Page, PageController, PageRegister} from "@haztivity/core";
+            import template from "./page.pug";
+            import {HzTabsResource} from "@haztivity/hz-tabs";
+            export let page: PageRegister = PageFactory.createPage(
+                {
+                    name: "myPage",
+                    resources: [
+                        HzTabsResource
+                    ],
+                    template: template
+                }
+            );
+            ```
+
             ##### Pug
             ```jade
             div(data-hz-resource="HzTabs")
@@ -25,8 +46,8 @@ div
             ```
             or
             ##### HTML
-            ```xml
-            <div data-hz-resource="HzTabs>
+            ```html
+            <div data-hz-resource="HzTabs">
                 <ul>
                     <li>
                         <a href="#tabs-1">Tab 1</a>
@@ -39,21 +60,7 @@ div
                 <div id="tabs-2">Tab 2 content</div>
             </div>
             ```
-            #### page.ts
-            ```typescript
-            import {PageFactory, Page, PageController, PageRegister} from "@haztivity/core";
-            import template from "./page.pug";
-            import {HzTabsResource} from "@haztivity/hz-tabs";
-            export let page: PageRegister = PageFactory.createPage(
-                {
-                    name: "6611",
-                    resources: [
-                        HzTabsResource
-                    ],
-                    template: template
-                }
-            );
-            ```
+
         div(data-hz-resource="HzTabs")
             ul
                 li
@@ -66,14 +73,17 @@ div
                 p Tab 2 content
 
         :markdown-it(linkify)
+            ## Sequence
+            By default, the tabs requires to be activate sequentially, to activate the 3rd tabs the 2nd must have been activated before.\
+            It's possible to disable this behavior using the attribute `data-opt-hz-tabs-sequential="false"`
             ### Options
-            All the options of tabs excepts functions could be specified by attributes using:
+            All the options of jquery ui accordion **except** functions could be specified by attributes using:
             ```jade
                 data-opt-tabs-[option]=[value]
             ```
-            If the option have multiple words, use dashes, for example `heightStyle` will be height-style
-
-            For example:
+            If the option have multiple words, use dashes, for example ```heightStyle``` have to be provided as ```height-style```
+            ### Examples:
+            #### Pug
             ```jade
             div(data-hz-resource="HzTabs"
                 data-opt-tabs-collapsible="true"
@@ -89,8 +99,8 @@ div
                     p Tab 2 content
             ```
             or
-            ##### HTML
-            ```xml
+            #### HTML
+            ```html
             <div data-hz-resource="HzTabs data-opt-tabs-collapsible="true" data-opt-tabs-active="false>
                 <ul>
                     <li>

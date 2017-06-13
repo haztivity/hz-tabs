@@ -16,8 +16,8 @@ let sco: ISco = ScoFactory.createSco(
         name: "1221",
         template: template,
         pages: [
-            page6612,
-            page6611
+            page6611,
+            page6612
         ],
         components: [
             HzNavbarComponent
