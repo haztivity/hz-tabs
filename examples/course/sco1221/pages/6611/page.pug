@@ -1,6 +1,6 @@
 div
     div.markdown-wrapper
-        :markdown-it(linkify)
+        :markdown-it
             # hz-tabs
             hz-tabs allows to create tabs as resources with all the advatages of an haztivity resource.\
             hz-tabs uses [jquery ui tabs](https://jqueryui.com/tabs/) under the hood.
@@ -32,7 +32,7 @@ div
             ```
 
             ##### Pug
-            ```jade
+            ```pug
             div(data-hz-resource="HzTabs")
                 ul
                     li
@@ -72,19 +72,19 @@ div
             div#tabs-2
                 p Tab 2 content
 
-        :markdown-it(linkify)
+        :markdown-it
             ## Sequence
             By default, the tabs requires to be activate sequentially, to activate the 3rd tabs the 2nd must have been activated before.\
             It's possible to disable this behavior using the attribute `data-opt-hz-tabs-sequential="false"`
             ### Options
             All the options of jquery ui accordion **except** functions could be specified by attributes using:
-            ```jade
+            ```pug
                 data-opt-tabs-[option]=[value]
             ```
             If the option have multiple words, use dashes, for example ```heightStyle``` have to be provided as ```height-style```
             ### Examples:
             #### Pug
-            ```jade
+            ```pug
             div(data-hz-resource="HzTabs"
                 data-opt-tabs-collapsible="true"
                 data-opt-tabs-active="false)

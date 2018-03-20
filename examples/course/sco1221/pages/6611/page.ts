@@ -6,7 +6,7 @@ import {PageFactory, PageRegister, PageController} from "@haztivity/core";
 import template from "./page.pug";
 import * as Prism "prismjs";
 import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-jade";
+import "prismjs/components/prism-pug";
 import {HzTabsResource} from "../../../resources/hz-tabs/HzTabs";
 export let page: PageRegister = PageFactory.createPage(
     {

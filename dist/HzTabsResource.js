@@ -22,7 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@haztivity/core");
 require("jquery-ui-dist/jquery-ui.js");
-var HzTabsResource = HzTabsResource_1 = (function (_super) {
+var HzTabsResource = /** @class */ (function (_super) {
     __extends(HzTabsResource, _super);
     function HzTabsResource(_$, _EventEmitterFactory, _DataOptions) {
         var _this = _super.call(this, _$, _EventEmitterFactory) || this;
@@ -30,6 +30,7 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
         _this._DataOptions = _DataOptions;
         return _this;
     }
+    HzTabsResource_1 = HzTabsResource;
     HzTabsResource.prototype.init = function (options, config) {
         this._config = config;
         this.refresh();
@@ -160,19 +161,19 @@ var HzTabsResource = HzTabsResource_1 = (function (_super) {
         this._storeActive();
         this._assignEvents();
     };
+    HzTabsResource._DEFAULT_TABS_OPTIONS = {};
+    HzTabsResource = HzTabsResource_1 = __decorate([
+        core_1.Resource({
+            name: "HzTabs",
+            dependencies: [
+                core_1.$,
+                core_1.EventEmitterFactory,
+                core_1.DataOptions
+            ]
+        })
+    ], HzTabsResource);
     return HzTabsResource;
+    var HzTabsResource_1;
 }(core_1.ResourceController));
-HzTabsResource._DEFAULT_TABS_OPTIONS = {};
-HzTabsResource = HzTabsResource_1 = __decorate([
-    core_1.Resource({
-        name: "HzTabs",
-        dependencies: [
-            core_1.$,
-            core_1.EventEmitterFactory,
-            core_1.DataOptions
-        ]
-    })
-], HzTabsResource);
 exports.HzTabsResource = HzTabsResource;
-var HzTabsResource_1;
 //# sourceMappingURL=HzTabsResource.js.map
